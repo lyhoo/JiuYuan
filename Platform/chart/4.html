@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.7.0/dist/echarts.js"></script>
+
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 481px;height:321px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+ 
+        // 指定图表的配置项和数据
+        var option = {
+    animation: false,
+    title: {
+        left: 'center',
+        text: '各类客户平均每公里票价',
+    },
+    legend: {
+        top: 'bottom',
+        data: ['次数']
+    },
+    tooltip: {
+    },
+    xAxis: {
+        data: ["重要客户","重要保持客户","季节性客户","重点挽留客户","低价值客户"],
+        axisLabel: {  
+                interval:0,  
+                rotate:20  
+            } 
+    },
+    yAxis: {
+    },
+
+    series: [
+        {
+            name: '平均每公里票价',
+            type: 'line',
+            smooth: true,
+            symbol: 'circle',
+            symbolSize: 5,
+            sampling: 'average',
+            itemStyle: {
+                color: '#d68262'
+            },
+            stack: 'a',
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#d68262'
+                }, {
+                    offset: 1,
+                    color: '#ffe'
+                }])
+            },
+            data:  [0.68, 1.07, 0.6, 0.59, 0.53]
+        },
+
+
+    ]
+};
+                    
+                    
+                    
+                    
+                    
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

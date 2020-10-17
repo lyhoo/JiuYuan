@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.7.0/dist/echarts.js"></script>
+
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 481px;height:321px;"></div>
+    <script type="text/javascript">
+        // import echarts from 'echarts'
+        var myChart = echarts.init(document.getElementById('main'));
+var charts = { // 按顺序排列从大到小
+  cityList: ['重要客户', '重要保持客户', '季节性客户', '重点挽留客户', '低价值客户'],
+  cityData: [0.78, 0.99, 0.7, 0.69, 0.64]
+}
+var top10CityList = charts.cityList
+var top10CityData = charts.cityData
+var color = ['rgba(248,195,248', 'rgba(100,255,249', 'rgba(135,183,255', 'rgba(248,195,248', 'rgba(100,255,249']
+
+let lineY = []
+for (var i = 0; i < charts.cityList.length; i++) {
+  var x = i
+  if (x > color.length - 1) {
+    x = color.length - 1
+  }
+  var data = {
+    name: charts.cityList[i],
+    color: color[x] + ')',
+    value: top10CityData[i],
+    itemStyle: {
+      normal: {
+        show: true,
+        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+          offset: 0,
+          color: color[x] + ', 0.3)'
+        }, {
+          offset: 1,
+          color: color[x] + ', 1)'
+        }], false),
+        barBorderRadius: 10
+      },
+      emphasis: {
+        shadowBlur: 15,
+        shadowColor: 'rgba(0, 0, 0, 0.1)'
+      }
+    }
+  }
+  lineY.push(data)
+}
+
+console.log(lineY)
+option= {
+    backgroundColor:'#fff',
+  title: {
+    show: true,
+    text:'各类客户平均折扣率',
+    left: 'center',
+  },
+  tooltip: {
+    trigger: 'item'
+  },
+  grid: {
+    borderWidth: 0,
+    top: '10%',
+    left: '5%',
+    right: '15%',
+    bottom: '3%'
+  },
+  color: color,
+  yAxis: [{
+    type: 'category',
+    inverse: true,
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false
+    },
+    axisLabel: {
+      show: false,
+      inside: false
+    },
+    data: top10CityList
+  }, {
+    type: 'category',
+    axisLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      show: true,
+      inside: false,
+      textStyle: {
+        color: '#000000',
+        fontSize: '14',
+        fontFamily: 'PingFangSC-Regular'
+      },
+      formatter: function (val) {
+        return `${val}`
+      }
+    },
+    splitArea: {
+      show: false
+    },
+    splitLine: {
+      show: false
+    },
+    data: top10CityData
+  }],
+  xAxis: {
+    type: 'value',
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false
+    },
+    splitLine: {
+      show: false
+    },
+    axisLabel: {
+      show: false
+    }
+  },
+  series: [{
+    name: '',
+    type: 'bar',
+    zlevel: 2,
+    barWidth: '10px',
+    data: lineY,
+    animationDuration: 1500,
+    label: {
+      normal: {
+        color: '#000000',
+        show: true,
+        position: [0, '-24px'],
+        textStyle: {
+          fontSize: 16
+        },
+        formatter: function (a, b) {
+          return a.name
+        }
+      }
+    }
+  }],
+  animationEasing: 'cubicOut'
+}
+myChart.setOption(option);
+
+    </script>
+</body>
+</html>
